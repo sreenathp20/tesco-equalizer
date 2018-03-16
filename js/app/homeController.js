@@ -39,10 +39,7 @@ DoAnalytics.controller('homeController', function ($scope, $q, $http) {
         angular.forEach($scope.sliders, function (value, key) {
             //$scope.mldata.stats.push(JSON.parse(value));
             var range = document.getElementById(value);
-            range.style.height = '200px';
-            range.style.margin = '0 auto 0px';
-
-            noUiSlider.create(range, {
+            var option = {
                 start: [0], // 4 handles, starting at...
                 margin: 1, // Handles must be at least 300 apart
                 //limit: 600, // ... but no more than 600
@@ -57,16 +54,31 @@ DoAnalytics.controller('homeController', function ($scope, $q, $http) {
                     'min': -12,
                     'max': +12
                 },
-                pips: { // Show a scale with the slider
-                    mode: 'steps',
-                    stepped: true,
-                    density: 48,
-                    // format: wNumb({
-                    //     decimals: 2,
-                    //     prefix: '$'
-                    // })
-                }
-            });
+                // pips: { // Show a scale with the slider
+                //     mode: 'steps',
+                //     stepped: true,
+                //     density: 100,
+                //     // format: wNumb({
+                //     //     decimals: 2,
+                //     //     prefix: '$'
+                //     // })
+                // }
+            };
+            if(key == 4) {
+                option.pips = { // Show a scale with the slider
+                        mode: 'steps',
+                        stepped: true,
+                        density: 100,
+                    //     // format: wNumb({
+                    //     //     decimals: 2,
+                    //     //     prefix: '$'
+                    //     // })
+                };
+            }
+            range.style.height = '170px';
+            range.style.margin = '0 auto 0px';
+
+            noUiSlider.create(range, option);
             range.noUiSlider.on('update', function(){
                 var v = range.noUiSlider.get();
                 v = Math.ceil(v)+12;
